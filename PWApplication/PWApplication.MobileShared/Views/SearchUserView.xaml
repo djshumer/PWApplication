@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:PWApplication.MobileShared.ViewModels.Base;assembly=PWApplication.MobileShared"
+             viewModel:ViewModelLocator.AutoWireViewModel="true"
+             xmlns:behaviors="clr-namespace:PWApplication.MobileShared.Behaviors"
+             mc:Ignorable="d"
+             x:Class="PWApplication.MobileShared.Views.SearchUserView"
+             Title="Find Counteragent">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="1" Padding="5" >
+                <SearchBar x:Name="searchBar"
+                       Text="{Binding SearchQuery, Mode=TwoWay}"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="CenterAndExpand"
+                   Placeholder="Search user..."
+                   SearchCommand="{Binding PerformSearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"/>
+                <Label Text="Enter a search text (more than 3 characters) and press enter or click the magnifying glass to search."
+                   HorizontalOptions="Fill" Margin="5,0,5,0"
+                   VerticalOptions="CenterAndExpand" />
+                <ListView x:Name="searchResults"
+                  IsEnabled="{Binding IsReady}"
+                  HorizontalOptions="Fill"
+                  VerticalOptions="CenterAndExpand"
+                  ItemsSource="{Binding SearchResults}"
+                  IsPullToRefreshEnabled="False"
+                  IsRefreshing="{Binding IsBusy}"
+                  RefreshControlColor="{StaticResource Key=LightGreenColor}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding UserName}" HorizontalOptions="FillAndExpand" FontSize="{StaticResource Key=MediumSize}"/>
+                                    <Label Text="{Binding FullName}" HorizontalOptions="FillAndExpand" FontSize="{StaticResource Key=MidMediumSize}"/>
+                                </StackLayout>
+                            </ViewCell>
+                            <!--<TextCell Text="{Binding UserName}" Detail="{Binding FullName}"/>-->
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Behaviors>
+                        <behaviors:EventToCommandBehavior           
+                            EventName="ItemTapped"
+                            Command="{Binding SelectedUserCommand}"
+                            EventArgsConverter="{StaticResource ItemTappedEventArgsConverter}" />
+                    </ListView.Behaviors>
+                </ListView>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

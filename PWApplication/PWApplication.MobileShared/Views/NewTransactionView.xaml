@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:PWApplication.MobileShared.ViewModels.Base;assembly=PWApplication.MobileShared"
+             xmlns:behaviors="clr-namespace:PWApplication.MobileShared.Behaviors"
+             viewModel:ViewModelLocator.AutoWireViewModel="true"
+             mc:Ignorable="d"
+             x:Class="PWApplication.MobileShared.Views.NewTransactionView"
+             Title="New Transaction">   
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="LabelBaseStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=MediumSize}"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="DescCounteragentStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=LargerSize}"/>
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        <Style TargetType="Editor" x:Key="EditorDescStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=MidMediumSize}"/>
+            <Setter Property="MinimumHeightRequest" Value="80"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="EntryTransactionAmountStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=HugeSize}" />
+            <Setter Property="TextColor" Value="{StaticResource OrangeTextColor}" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- INDICATOR -->
+            <ActivityIndicator
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Color="{StaticResource LightGreenColor}"
+            IsRunning="{Binding IsBusy}"  
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+                <ActivityIndicator.WidthRequest>
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="iOS, Android" Value="100" />
+                        <On Platform="UWP, WinRT, WinPhone" Value="400" />
+                    </OnPlatform>
+                </ActivityIndicator.WidthRequest>
+            </ActivityIndicator>
+            
+            <ScrollView Grid.Row="0">
+                <StackLayout Spacing="20" Padding="15">
+                    <Label Text="Сounteragent:" Style="{StaticResource LabelBaseStyle}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Entry x:Name="EntryСounteragentName" Grid.Column="0" Text="{Binding CounteragentView.Value.FullName, Mode=OneWay}" 
+                               d:Text="John Wick" IsReadOnly="True" Placeholder="Choose Сounteragent" 
+                               Style="{StaticResource DescCounteragentStyle}" >
+                        </Entry>
+                        <!--Find User Button-->
+                        <Button Grid.Column="1" Text="Find" IsEnabled="{Binding IsReady, Mode=OneWay}"
+                                Command="{Binding FindUserCommand}"/>
+                    </Grid>
+                    <Entry Text="{Binding CounteragentView.Value.UserName, Mode=OneWay}" 
+                       d:Text="demouser@microsoft.com" IsReadOnly="True" Placeholder="User Name ..."
+                       Style="{StaticResource DescCounteragentStyle}"/>
+                    <Label Text="{Binding TransactionView.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					       Style="{StaticResource Key=ValidationErrorLabelStyle}" />
+                    <Label Text="Description:" Style="{StaticResource LabelBaseStyle}" />
+                    <Editor Text="{Binding Description, Mode=TwoWay}" Placeholder="Enter Description ..." 
+                            d:Text="Bonus" MaxLength="500" IsReadOnly="{Binding IsBusy}" 
+                            VerticalOptions="FillAndExpand" Keyboard="Text"
+                            HorizontalOptions="FillAndExpand" 
+                            AutoSize="TextChanges" IsSpellCheckEnabled="True"
+                       Style="{StaticResource EditorDescStyle}"/>
+                    <StackLayout>
+                        <Label Text="Amount" FontSize="{StaticResource Key=MediumSize}" 
+                           HorizontalOptions="CenterAndExpand" 
+                           Style="{StaticResource LabelBaseStyle}"/>
+                        <Entry Text="{Binding TransactionAmount.Value, Mode=TwoWay, StringFormat='{0:N2}'}" Placeholder="Enter Amount"
+                           d:Text="50.00" IsReadOnly="{Binding IsBusy}" Keyboard="Numeric"
+                           Style="{StaticResource EntryTransactionAmountStyle}">
+                            <Entry.Behaviors>
+                                <behaviors:EventToCommandBehavior
+							        EventName="TextChanged"
+							        Command="{Binding ValidateTransactionAmountCommand}" />
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger 
+							        TargetType="Entry"
+							        Binding="{Binding TransactionAmount.IsValid}"
+							        Value="False">
+                                    <Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Label Text="{Binding TransactionAmount.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					        Style="{StaticResource Key=ValidationErrorLabelStyle}" />
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <StackLayout HeightRequest="50" Grid.Row="1" Padding="15">
+                <Button Text="TRANSFER" IsEnabled="{Binding IsReady}"
+                    Command="{Binding CreateTransactionCommand}">
+                </Button>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

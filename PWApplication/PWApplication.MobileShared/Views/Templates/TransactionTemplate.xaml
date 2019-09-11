@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PWApplication.MobileShared.Views.Templates.TransactionTemplate" >
+  <ViewCell.View>
+      <Grid BackgroundColor="{StaticResource BackgroundColor}"
+              Margin="5" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Margin="3,0,3,3"
+                   d:Text="John Wick" FontSize="{StaticResource Key=LargeSize}"
+                   Text="{Binding СounteragentFullName}"  
+                   HorizontalOptions="StartAndExpand" />
+            <Label Grid.Row="1" Grid.Column="0" Margin="3,0,3,3"
+                   d:Text="14:10:23" FontSize="{StaticResource Key=MidMediumSize}"
+                   Text="{Binding OperationTimeView }" 
+                   HorizontalOptions="StartAndExpand" />
+            <Label Grid.Row="0" Grid.Column="1" Margin="3,0,3,3" Grid.RowSpan="2"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End" 
+                   d:Text="50.00" FontSize="{StaticResource Key=ExtraBigSize2}" 
+                   Text="{Binding TransactionAmountView }" 
+                   TextColor="{StaticResource OrangeTextColor}" >
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsIncoming}" Value="True">
+                        <Setter Property="TextColor" Value="{StaticResource TextGreenColor}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Label Grid.Row="3" Grid.Column="0" Margin="3,0,3,3"
+                   d:Text="Bonus" FontSize="{StaticResource Key=LittleSize}"
+                   Text="{Binding Description}" 
+                   MaxLines="1" 
+                   HorizontalOptions="FillAndExpand">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsDescriptionEmpty}" Value="True">
+                        <Setter Property="IsVisible" Value="False"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </Grid>
+    </ViewCell.View>
+</ViewCell>

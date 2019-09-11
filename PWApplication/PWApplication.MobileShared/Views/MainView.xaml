@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            xmlns:views="clr-namespace:PWApplication.MobileShared.Views"
+            x:Class="PWApplication.MobileShared.Views.MainView" 
+            BindingContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}" 
+            BackgroundColor="{StaticResource BackgroundColor}"
+            BarBackgroundColor="{StaticResource GreenColor}"
+            NavigationPage.HasNavigationBar="False" 
+            NavigationPage.HasBackButton="False"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.IsSmoothScrollEnabled="True" >
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Text="Log out" Command="{Binding LogoutCommand}" />
+    </TabbedPage.ToolbarItems>
+    <TabbedPage.Children>
+        <NavigationPage Title="Profile">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:ProfileView />
+            </x:Arguments>
+        </NavigationPage>
+        
+        <NavigationPage Title="History">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_feed.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:HistoryTransactionsView />
+            </x:Arguments>
+        </NavigationPage>
+
+        <NavigationPage Title="About">
+            <NavigationPage.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="iOS" Value="tab_about.png"/>
+                </OnPlatform>
+            </NavigationPage.Icon>
+            <x:Arguments>
+                <views:AboutView />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+    
+</TabbedPage>

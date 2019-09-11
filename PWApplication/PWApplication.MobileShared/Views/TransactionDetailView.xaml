@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModel="clr-namespace:PWApplication.MobileShared.ViewModels.Base;assembly=PWApplication.MobileShared"
+             viewModel:ViewModelLocator.AutoWireViewModel="true"
+             mc:Ignorable="d"
+             x:Class="PWApplication.MobileShared.Views.TransactionDetailView"
+             Title="Transaction Detail" >
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="LabelBaseStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=MediumSize}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="DescCounteragentStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=BigSize}"/>
+        </Style>
+        <Style TargetType="Label" x:Key="DescDateTimeStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=LargeSize}"/>
+        </Style>
+        <Style TargetType="Editor" x:Key="EditorDescStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=MidMediumSize}"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LabelTransactionAmountStyle">
+            <Setter Property="FontSize" Value="{StaticResource Key=HugeSize}" />
+            <Setter Property="TextColor" Value="{StaticResource TextOrangeColor}" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="NewTransactionButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="10,5,10,5" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="{StaticResource BackgroundColor}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackLayout HeightRequest="50">
+            <Button
+                Command="{Binding NewTransactionCommand}"
+                Text="COPY TO NEW TRANSACTION"
+                Style="{StaticResource NewTransactionButtonStyle}">
+            </Button>
+        </StackLayout> 
+        <ScrollView Grid.Row="1">
+            <StackLayout Spacing="20" Padding="15">
+                <Label Text="Сounteragent:" Style="{StaticResource LabelBaseStyle}" />
+                <Label Text="{Binding TransactionView.СounteragentFullName}" 
+                       d:Text="John Wick" 
+                       Style="{StaticResource DescCounteragentStyle}"/>
+                <Label Text="{Binding TransactionView.СounteragentUserName}" 
+                       d:Text="demouser@microsoft.com" 
+                       Style="{StaticResource DescCounteragentStyle}"/>
+                <Label Text="Operation Date Time:" 
+                       Style="{StaticResource LabelBaseStyle}" />
+                <Label Text="{Binding TransactionView.OperationDateTimeView}" 
+                       d:Text="6 August 2019 - 16:23:01" 
+                       Style="{StaticResource Key=DescDateTimeStyle}"/>
+                <Label Text="Description:" Style="{StaticResource LabelBaseStyle}" />
+                <Editor Text="{Binding TransactionView.Description}" 
+                        d:Text="Bonus" 
+                        Style="{StaticResource EditorDescStyle}"/>
+                <StackLayout>
+                    <Label Text="Amount" FontSize="{StaticResource Key=MediumSize}" 
+                           HorizontalOptions="CenterAndExpand" 
+                           Style="{StaticResource LabelBaseStyle}"/>
+                    <Label Text="{Binding TransactionView.TransactionAmountView}" 
+                           d:Text="50.00" 
+                           Style="{StaticResource LabelTransactionAmountStyle}">
+                        <Label.Triggers>
+                            <DataTrigger Binding="{Binding TransactionView.IsIncoming, Mode=OneWay}" TargetType="Label" Value="True">
+                                <Setter Property="TextColor" Value="{StaticResource TextGreenColor}"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        
+    </Grid>
+    
+</ContentPage>
