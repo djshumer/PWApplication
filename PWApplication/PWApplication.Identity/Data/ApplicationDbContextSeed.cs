@@ -41,26 +41,6 @@ namespace PWApplication.MobileAppService.Data
                 }
             }
 
-            //try
-            //{
-            //    if (!context.PWTransactions.Any())
-            //    {
-            //        AddTransactions(users, context);
-                    
-            //        await context.SaveChangesAsync();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    if (retryForAvaiability < 10)
-            //    {
-            //        retryForAvaiability++;
-
-            //        logger.LogError(ex, "EXCEPTION ERROR while migrating {DbContextName}", nameof(AppDbContext));
-
-            //        await SeedAsync(context, env, logger, retryForAvaiability);
-            //    }
-            //}
         }
 
         

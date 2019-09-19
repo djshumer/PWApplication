@@ -2,14 +2,15 @@
 using PWApplication.MobileShared.Models;
 using PWApplication.MobileShared.ViewModels.Base;
 
+
 namespace PWApplication.MobileShared.ViewModels
 {
     public class TransactionViewModel : ExtendedBindableObject
     {
 
-        public Transaction Transaction { get; set; }
+        public TransactionModel Transaction { get; set; }
 
-        public TransactionViewModel(Transaction transaction)
+        public TransactionViewModel(TransactionModel transaction)
         {
             Transaction = transaction;
         }

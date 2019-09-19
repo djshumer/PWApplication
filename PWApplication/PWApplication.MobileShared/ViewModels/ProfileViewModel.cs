@@ -12,7 +12,7 @@ using PWApplication.MobileShared.Models.User;
 using PWApplication.MobileShared.Services.RequestProvider;
 using PWApplication.MobileShared.Services.Settings;
 using PWApplication.MobileShared.Services.Transactions;
-using PWApplication.MobileShared.Services.Users;
+using PWApplication.MobileShared.Services.UserInfo;
 using PWApplication.MobileShared.ViewModels.Base;
 using Xamarin.Forms;
 
@@ -21,7 +21,7 @@ namespace PWApplication.MobileShared.ViewModels
     public class ProfileViewModel : BaseViewModel
     {
         private readonly ISettingsService _settingsService;
-        private readonly IUserService _userService;
+        private readonly IUserInfoService _userInfoService;
         private readonly ITransactionService _transactionService;
 
         private ObservableCollection<Grouping<string, TransactionViewModel>> _transactionsList = new ObservableCollection<Grouping<string, TransactionViewModel>>();
@@ -29,10 +29,10 @@ namespace PWApplication.MobileShared.ViewModels
         private decimal _balance = 0;
 
        
-        public ProfileViewModel(ISettingsService settingsService, IUserService userService, ITransactionService transactionService) : base()
+        public ProfileViewModel(ISettingsService settingsService, IUserInfoService userInfoService, ITransactionService transactionService) : base()
         {
             _settingsService = settingsService;
-            _userService = userService;
+            _userInfoService = userInfoService;
             _transactionService = transactionService;
         }
 
@@ -75,7 +75,7 @@ namespace PWApplication.MobileShared.ViewModels
             {
                 var authToken = _settingsService.AuthAccessToken;
 
-                UserInfo = await _userService.GetUserInfoAsync(authToken);
+                UserInfo = await _userInfoService.GetCurrentUserInfoAsync(authToken);
 
                 var trList = await _transactionService.GetLastTransactions(authToken, 10);
                 var trViewModelList = ToTransactionViewModels(trList);
@@ -107,7 +107,7 @@ namespace PWApplication.MobileShared.ViewModels
             await NavigationService.NavigateToAsync<NewTransactionViewModel>();
         }
 
-        private decimal UpdateUserBalanceByTranList(IList<Transaction> transactions)
+        private decimal UpdateUserBalanceByTranList(IList<TransactionModel> transactions)
         {
             if (transactions.Any())
             {
@@ -124,10 +124,10 @@ namespace PWApplication.MobileShared.ViewModels
             await NavigationService.NavigateToAsync<TransactionDetailViewModel>(transaction.Transaction);
         }
 
-        private ObservableCollection<TransactionViewModel> ToTransactionViewModels(IEnumerable<Transaction> source)
+        private ObservableCollection<TransactionViewModel> ToTransactionViewModels(IEnumerable<TransactionModel> source)
         {
             ObservableCollection<TransactionViewModel> newCol = new ObservableCollection<TransactionViewModel>();
-            foreach (Transaction tr in source)
+            foreach (TransactionModel tr in source)
             {
                 newCol.Add(new TransactionViewModel(tr));
             }

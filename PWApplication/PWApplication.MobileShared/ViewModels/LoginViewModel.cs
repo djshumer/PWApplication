@@ -212,10 +212,7 @@ namespace PWApplication.MobileShared.ViewModels
                 LoginUrl = logoutRequest;
             }
 
-            _settingsService.AuthAccessToken = string.Empty;
-            _settingsService.AuthIdToken = string.Empty;
-
-            if (_settingsService.UseMocks)
+            if (IsMock)
             {
                 _settingsService.AuthAccessToken = string.Empty;
                 _settingsService.AuthIdToken = string.Empty;

@@ -17,9 +17,9 @@ namespace PWApplication.MobileShared.ViewModels
 
         public override async Task InitializeAsync(object navigationData)
         {
-            if (navigationData is Transaction)
+            if (navigationData is TransactionModel)
             {
-                var transaction = navigationData as Transaction;
+                var transaction = navigationData as TransactionModel;
                 TransactionView = new TransactionViewModel(transaction);
             }
             else

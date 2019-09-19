@@ -1,12 +1,9 @@
 ﻿using PWApplication.MobileShared.Models.User;
 using PWApplication.MobileShared.Services.Settings;
 using PWApplication.MobileShared.Services.UserInfo;
-using PWApplication.MobileShared.Services.Users;
 using PWApplication.MobileShared.ViewModels.Base;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -93,7 +90,7 @@ namespace PWApplication.MobileShared.ViewModels
             try
             {
                 var authToken = _settingsService.AuthAccessToken;
-                var results = await _userInfoService.FindUser(authToken, query);
+                var results = await _userInfoService.FindUserAsync(authToken, query);
                 SearchResults = results.ToObservableCollection();
             }
             catch (ServiceAuthenticationException)

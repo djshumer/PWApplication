@@ -20,7 +20,7 @@ namespace PWApplication.MobileShared.Services.UserInfo
         }
 
         // GET api/v1/userinfo/find[?username="dem"]
-        public async Task<ObservableCollection<UserInfoSimple>> FindUser(string authToken, string username)
+        public async Task<ObservableCollection<UserInfoSimple>> FindUserAsync(string authToken, string username)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/find?username={username}");
 
@@ -33,11 +33,20 @@ namespace PWApplication.MobileShared.Services.UserInfo
         }
 
         // GET api/v1/userinfo/{userId}]
-        public async Task<UserInfoSimple> GetUserInfo(string authToken, string userId)
+        public async Task<UserInfoSimple> GetUserInfoAsync(string authToken, string userId)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/{userId}");
 
             var userInfo = await _requestProvider.GetAsync<UserInfoSimple>(uri, authToken);
+
+            return userInfo;
+        }
+
+        public async Task<AppUserInfo> GetCurrentUserInfoAsync(string authToken)
+        {
+            var uri = UriHelper.CombineUri(GlobalSetting.Instance.UserInfoEndpoint);
+
+            var userInfo = await _requestProvider.GetAsync<AppUserInfo>(uri, authToken);
 
             return userInfo;
         }

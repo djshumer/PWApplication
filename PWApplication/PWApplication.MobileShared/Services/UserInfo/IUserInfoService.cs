@@ -6,8 +6,10 @@ namespace PWApplication.MobileShared.Services.UserInfo
 {
     public interface IUserInfoService
     {
-        Task<ObservableCollection<UserInfoSimple>> FindUser(string authToken, string username);
+        Task<ObservableCollection<UserInfoSimple>> FindUserAsync(string authToken, string username);
 
-        Task<UserInfoSimple> GetUserInfo(string authToken, string userId);
+        Task<UserInfoSimple> GetUserInfoAsync(string authToken, string userId);
+
+        Task<AppUserInfo> GetCurrentUserInfoAsync(string authToken);
     }
 }

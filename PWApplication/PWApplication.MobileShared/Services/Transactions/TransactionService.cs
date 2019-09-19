@@ -21,42 +21,42 @@ namespace PWApplication.MobileShared.Services.Transactions
         }
 
         // GET api/v1/transactions/last[?count=10]
-        public async Task<ObservableCollection<Transaction>> GetLastTransactions(string authToken, int count)
+        public async Task<ObservableCollection<TransactionModel>> GetLastTransactions(string authToken, int count)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/last?count={count}");
 
-            var transactionsList = await _requestProvider.GetAsync<IEnumerable<Transaction>>(uri, authToken);
+            var transactionsList = await _requestProvider.GetAsync<IEnumerable<TransactionModel>>(uri, authToken);
 
             if (transactionsList != null)
                 return transactionsList.ToObservableCollection();
             else
-                return new ObservableCollection<Transaction>();
+                return new ObservableCollection<TransactionModel>();
         }
 
         // GET api/v1/transactions/range[?skip=100&count=100]
-        public async Task<ObservableCollection<Transaction>> GetTransactionsByRange(string authToken, int skip, int count)
+        public async Task<ObservableCollection<TransactionModel>> GetTransactionsByRange(string authToken, int skip, int count)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/range?skip={skip}&count={count}");
 
-            IEnumerable<Transaction> transactionsList = await _requestProvider.GetAsync<IEnumerable<Transaction>>(uri, authToken);
+            IEnumerable<TransactionModel> transactionsList = await _requestProvider.GetAsync<IEnumerable<TransactionModel>>(uri, authToken);
 
             if (transactionsList != null)
                 return transactionsList.ToObservableCollection();
             else
-                return new ObservableCollection<Transaction>();
+                return new ObservableCollection<TransactionModel>();
         }
 
         // GET api/v1/transactions/bydate[?startDate=10.10.2019&endDate=15.10.2019]
-        public async Task<ObservableCollection<Transaction>> GetTransactionsByDate(string authToken, DateTime startDateTime, DateTime endDateTime)
+        public async Task<ObservableCollection<TransactionModel>> GetTransactionsByDate(string authToken, DateTime startDateTime, DateTime endDateTime)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/bydate?startDate={startDateTime}&endDate={endDateTime}");
 
-            IEnumerable<Transaction> transactionsList = await _requestProvider.GetAsync<IEnumerable<Transaction>>(uri, authToken);
+            IEnumerable<TransactionModel> transactionsList = await _requestProvider.GetAsync<IEnumerable<TransactionModel>>(uri, authToken);
 
             if (transactionsList != null)
                 return transactionsList.ToObservableCollection();
             else
-                return new ObservableCollection<Transaction>();
+                return new ObservableCollection<TransactionModel>();
         }
 
         // GET api/v1/transactions/balance
@@ -73,17 +73,17 @@ namespace PWApplication.MobileShared.Services.Transactions
         }
 
         // GET: api/transactions/5
-        public async Task<Transaction> GetTransaction(string authToken, Guid id)
+        public async Task<TransactionModel> GetTransaction(string authToken, Guid id)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/{id}");
 
-            Transaction transaction = await _requestProvider.GetAsync<Transaction>(uri, authToken);
+            TransactionModel transaction = await _requestProvider.GetAsync<TransactionModel>(uri, authToken);
 
             return transaction;
         }
 
         // POST: api/transactions/transfer
-        public async Task<Transaction> PostTransaction(string authToken, string counteragentId, decimal transactionAmount, string description)
+        public async Task<TransactionModel> PostTransaction(string authToken, string counteragentId, decimal transactionAmount, string description)
         {
             var uri = UriHelper.CombineUri(GlobalSetting.Instance.GatewayPWEndpoint, $"{ApiUrlBase}/transfer");
 
@@ -94,7 +94,7 @@ namespace PWApplication.MobileShared.Services.Transactions
                 Description = description
             };
 
-            Transaction transaction = await _requestProvider.PostAsync<Transaction, NewTransactionModel>(uri, newTransactionModel, authToken);
+            TransactionModel transaction = await _requestProvider.PostAsync<TransactionModel, NewTransactionModel>(uri, newTransactionModel, authToken);
 
             return transaction;
         }

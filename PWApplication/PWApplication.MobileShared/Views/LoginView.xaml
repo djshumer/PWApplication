@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              xmlns:behaviors="clr-namespace:PWApplication.MobileShared.Behaviors;assembly=PWApplication.MobileShared"
              xmlns:converters="clr-namespace:PWApplication.MobileShared.Converters;assembly=PWApplication.MobileShared"
              xmlns:customControls="clr-namespace:PWApplication.MobileShared.CustomControls;assembly=PWApplication.MobileShared"
              xmlns:animations="clr-namespace:PWApplication.MobileShared.Animations"
-             mc:Ignorable="d"
+             xmlns:viewModel="clr-namespace:PWApplication.MobileShared.ViewModels.Base;assembly=PWApplication.MobileShared"
+             viewModel:ViewModelLocator.AutoWireViewModel="true"
              x:Class="PWApplication.MobileShared.Views.LoginView"
-             BindingContext="{Binding LoginViewModel, Source={StaticResource ViewModelLocator}}"
              BackgroundColor="{StaticResource BackgroundColor}"
              NavigationPage.HasNavigationBar="False"
              NavigationPage.HasBackButton="False">
@@ -67,13 +68,7 @@
             <Setter Property="BackgroundColor"
                     Value="{StaticResource GreenColor}" />
         </Style>
-        <animations:StoryBoard
-              x:Key="LoginAnimation"
-              Target="{x:Reference LoginPanel}">
-            <animations:FadeInAnimation
-                    Direction="Up"
-                    Duration="1500" />
-        </animations:StoryBoard>
+        
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource BackgroundColor}">

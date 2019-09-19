@@ -140,14 +140,15 @@ namespace Transaction.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<TransactionViewModel>> Transfer(TransactionModel model)
         {
-            if (model.TransactionAmount < 0
+            string agentId = _identityService.GetUserIdentity();
+
+            if (model.TransactionAmount < 0 
                 || String.IsNullOrWhiteSpace(model.CounteragentId)
-                || Guid.TryParse(model.CounteragentId, out var s) == false)
+                || Guid.TryParse(model.CounteragentId, out var s) == false
+                || agentId == model.CounteragentId)
             {
                 return BadRequest();
             }
-
-            string agentId = _identityService.GetUserIdentity();
 
             var agentOneLastTr = await _context.PWTransactions
                 .Where(c => c.AgentId == agentId)

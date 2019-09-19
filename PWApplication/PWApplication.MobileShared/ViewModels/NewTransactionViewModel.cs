@@ -8,7 +8,6 @@ using PWApplication.MobileShared.Services.RequestProvider;
 using PWApplication.MobileShared.Services.Settings;
 using PWApplication.MobileShared.Services.Transactions;
 using PWApplication.MobileShared.Services.UserInfo;
-using PWApplication.MobileShared.Services.Users;
 using PWApplication.MobileShared.Validations;
 using PWApplication.MobileShared.ViewModels.Base;
 using Xamarin.Forms;
@@ -24,6 +23,7 @@ namespace PWApplication.MobileShared.ViewModels
         private decimal _userBalance = 0;
         private ValidatableObject<decimal> _transactionAmount = new ValidatableObject<decimal>();
         private ValidatableObject<UserInfoSimple> _counteragentView = new ValidatableObject<UserInfoSimple>();
+        private AppUserInfo _currentUserInfo;
         private string _description = "";
 
         public NewTransactionViewModel(ISettingsService settingsService, ITransactionService transactionsService, IUserInfoService userInfoService)
@@ -48,18 +48,22 @@ namespace PWApplication.MobileShared.ViewModels
             {
                 var authToken = _settingsService.AuthAccessToken;
 
-                if (navigationData is Transaction)
+                CurrentUser = await _userInfoService.GetCurrentUserInfoAsync(authToken);
+
+                ReplaceCounteragentUserValidation(CurrentUser);
+
+                UserBalance = await _transactionsService.GetBalance(authToken);
+
+                if (navigationData is TransactionModel)
                 {
-                    Transaction transaction = navigationData as Transaction;
+                    TransactionModel transaction = navigationData as TransactionModel;
 
                     TransactionAmount.Value = Math.Abs(transaction.TransactionAmount);
 
                     transaction.Description = transaction.Description;
 
-                    CounteragentView.Value = await _userInfoService.GetUserInfo(authToken, transaction.СounteragentId);
+                    CounteragentView.Value = await _userInfoService.GetUserInfoAsync(authToken, transaction.СounteragentId);
                 }
-    
-                UserBalance = await _transactionsService.GetBalance(authToken);
             }
             catch (ServiceAuthenticationException)
             {
@@ -74,6 +78,12 @@ namespace PWApplication.MobileShared.ViewModels
             {
                 IsBusy = false;
             }
+        }
+
+        public AppUserInfo CurrentUser
+        {
+            get { return _currentUserInfo; }
+            protected set { _currentUserInfo = value; RaisePropertyChanged(() => CurrentUser); }
         }
 
         public decimal UserBalance
@@ -152,7 +162,7 @@ namespace PWApplication.MobileShared.ViewModels
 
                 await NavigationService.NavigationToBackAsync();
             }
-            catch (ServiceAuthenticationException)
+            catch (ServiceAuthenticationException exc) 
             {
                 await LogoutAsync();
             }
@@ -172,10 +182,20 @@ namespace PWApplication.MobileShared.ViewModels
             _transactionAmount.Validate();
         }
 
+        private void ReplaceCounteragentUserValidation(AppUserInfo currentUser)
+        {
+            var findRule = _counteragentView.Validations.Find(s => s.GetType() == typeof(IsNotEqualCurrentUser));
+
+            if (findRule != null)
+            _counteragentView.Validations.Remove(findRule);
+            //This situation is unlikely because the server does not return the user on whose behalf the request was made. Manual data entry is blocked.
+            _counteragentView.Validations.Add(new IsNotEqualCurrentUser(currentUser) {ValidationMessage = "A Counteragent must be not equal current User" });
+        }
+
         private void AddValidations()
         {
-            _transactionAmount.Validations.Add(new IsDecimalGreaterThenNull { ValidationMessage = "A Transaction Amount must be greate then 0." });
-            _counteragentView.Validations.Add(new IsNotNullOrEmptyRule<UserInfoSimple> { ValidationMessage = "A Counteragent must be set." });
+            _transactionAmount.Validations.Add(new IsDecimalGreaterThenNull() { ValidationMessage = "A Transaction Amount must be greate then 0." });
+            _counteragentView.Validations.Add(new IsNotNullOrEmptyRule<UserInfoSimple>() { ValidationMessage = "A Counteragent must be set." });
         }
 
     }

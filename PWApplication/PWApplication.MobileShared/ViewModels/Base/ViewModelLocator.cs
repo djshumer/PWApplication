@@ -11,7 +11,6 @@ using PWApplication.MobileShared.Services.RequestProvider;
 using PWApplication.MobileShared.Services.Settings;
 using PWApplication.MobileShared.Services.Transactions;
 using PWApplication.MobileShared.Services.UserInfo;
-using PWApplication.MobileShared.Services.Users;
 using Xamarin.Forms;
 
 namespace PWApplication.MobileShared.ViewModels.Base
@@ -58,14 +57,12 @@ namespace PWApplication.MobileShared.ViewModels.Base
 
             if (useMockServices)
             {
-                builder.RegisterType<UserMockService>().As<IUserService>().InstancePerLifetimeScope();
                 builder.RegisterType<MockTransactionService>().As<ITransactionService>().InstancePerLifetimeScope();
                 builder.RegisterType<MockUserInfoService>().As<IUserInfoService>().InstancePerLifetimeScope();
             }
             else
             {
                 builder.RegisterType<TransactionService>().As<ITransactionService>().InstancePerLifetimeScope();
-                builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
                 builder.RegisterType<UserInfoService>().As<IUserInfoService>().InstancePerLifetimeScope();
             }
 
@@ -92,18 +89,6 @@ namespace PWApplication.MobileShared.ViewModels.Base
         {
             return _container.Resolve<T>();
         }
-
-        public MainViewModel MainViewModel => Resolve<MainViewModel>();
-
-        public LoginViewModel LoginViewModel => Resolve<LoginViewModel>();
-
-        public AboutViewModel AboutViewModel => Resolve<AboutViewModel>();
-
-        public ProfileViewModel ProfileViewModel => Resolve<ProfileViewModel>();
-
-        public HistoryTransactionsViewModel HystoryTransactionsViewModel => Resolve<HistoryTransactionsViewModel>();
-
-
 
         private static void OnAutoWireViewModelChanged(BindableObject bindable, object oldValue, object newValue)
         {

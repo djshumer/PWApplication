@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using PWApplication.MobileShared.Services.NavigationService;
 using PWApplication.MobileShared.Services.Settings;
-using PWApplication.MobileShared.ViewModels;
 using PWApplication.MobileShared.ViewModels.Base;
 using Xamarin.Forms;
 
@@ -33,7 +32,7 @@ namespace PWApplication.MobileShared.Views
         {
             _settingsService = ViewModelLocator.Resolve<ISettingsService>();
             //TODO:UseMock false for backend test and use Android Emulator with api level 23-26 
-            _settingsService.UseMocks = true;
+            _settingsService.UseMocks = false;
             if (_settingsService.UseMocks)
                 ViewModelLocator.UpdateDependencies(_settingsService.UseMocks);
         }

@@ -7,7 +7,7 @@ namespace PWApplication.MobileShared.Services.UserInfo
 {
     public class MockUserInfoService : IUserInfoService
     {
-        public Task<ObservableCollection<UserInfoSimple>> FindUser(string authToken, string username)
+        public Task<ObservableCollection<UserInfoSimple>> FindUserAsync(string authToken, string username)
         {
             Task.Delay(500);
             var list = new ObservableCollection<UserInfoSimple>();
@@ -17,7 +17,7 @@ namespace PWApplication.MobileShared.Services.UserInfo
                 {
                     UserId = Guid.NewGuid().ToString(),
                     Email = $"demouser{i}@microsoft.com",
-                    FullName = "John Wick",
+                    FullName = $"John Wick {i}",
                     UserName = $"demouser{i}@microsoft.com"                    
                 });
             }
@@ -25,7 +25,7 @@ namespace PWApplication.MobileShared.Services.UserInfo
             return Task.FromResult(list);
         }
 
-        public Task<UserInfoSimple> GetUserInfo(string authToken, string userId)
+        public Task<UserInfoSimple> GetUserInfoAsync(string authToken, string userId)
         {
             return Task.FromResult(new UserInfoSimple()
             {
@@ -35,5 +35,18 @@ namespace PWApplication.MobileShared.Services.UserInfo
                 UserName = "demouser@microsoft.com"
             });
         }
+
+        public Task<AppUserInfo> GetCurrentUserInfoAsync(string authToken)
+        {
+            return Task.FromResult(new AppUserInfo()
+            {
+                UserId = Guid.NewGuid().ToString(),
+                Email = "demouser@microsoft.com",
+                FullName = "John Wick",
+                PreferredUsername = "demouser@microsoft.com"
+            });
+        }
+
+        
     }
 }

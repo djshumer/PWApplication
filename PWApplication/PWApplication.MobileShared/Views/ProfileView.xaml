@@ -6,8 +6,6 @@
              xmlns:behaviors="clr-namespace:PWApplication.MobileShared.Behaviors;assembly=PWApplication.MobileShared"
              xmlns:templates="clr-namespace:PWApplication.MobileShared.Views.Templates;assembly=PWApplication.MobileShared"
              xmlns:viewModel="clr-namespace:PWApplication.MobileShared.ViewModels.Base;assembly=PWApplication.MobileShared"
-             xmlns:animations="clr-namespace:PWApplication.MobileShared.Animations"
-             xmlns:triggers="clr-namespace:PWApplication.MobileShared.Triggers"
              viewModel:ViewModelLocator.AutoWireViewModel="true"
              mc:Ignorable="d"
              x:Class="PWApplication.MobileShared.Views.ProfileView"
@@ -27,22 +25,8 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
             <Setter Property="Margin" Value="10,5,10,5" />
         </Style>
-        <animations:StoryBoard 
-                x:Key="ListAnimation"    
-                Target="{x:Reference TransactionsListView}">
-            <animations:FadeInAnimation 
-                    Direction="Up"
-                    Duration="1500"
-                    Delay="250"/>
-        </animations:StoryBoard>
+
     </ContentPage.Resources>
-    <ContentPage.Triggers>
-        <EventTrigger 
-            Event="Appearing">
-            <triggers:BeginAnimation   
-                Animation="{StaticResource ListAnimation}" />
-        </EventTrigger>
-    </ContentPage.Triggers>
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource BackgroundColor}">
             <Grid.RowDefinitions>

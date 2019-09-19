@@ -2,7 +2,7 @@
 
 namespace PWApplication.MobileShared.Models
 {
-    public class Transaction
+    public class TransactionModel
     {
 
         public Guid Id { get; set; }

@@ -19,10 +19,10 @@ namespace PWApplication.MobileShared.Extensions
             return collection;
         }
 
-        public static ObservableCollection<TransactionViewModel> ToTransactionViewModels(IEnumerable<Transaction> source)
+        public static ObservableCollection<TransactionViewModel> ToTransactionViewModels(IEnumerable<TransactionModel> source)
         {
             ObservableCollection<TransactionViewModel> newCol = new ObservableCollection<TransactionViewModel>();
-            foreach (Transaction tr in source)
+            foreach (TransactionModel tr in source)
             {
                 newCol.Add(new TransactionViewModel(tr));
             }
