@@ -1,34 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Transaction.Api.Infrastructure.Data;
-using Transaction.Api.Infrastructure.Services;
-using Transaction.Api.Models;
+using PWApplication.TransactionApi.Extensions;
+using PWApplication.TransactionApi.Infrastructure.Data;
+using PWApplication.TransactionApi.Infrastructure.Services;
+using PWApplication.TransactionApi.Models;
 
-namespace Transaction.Api.Controllers
+namespace PWApplication.TransactionApi.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/userinfo")]
     [Authorize]
     [ApiController]
     public class UserInfoController : ControllerBase
     {
-        private readonly PWTranscationContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IIdentityService _identityService;
-        private readonly ILogger<TransactionsController> _logger;
 
-        public UserInfoController(PWTranscationContext context,
-            IIdentityService identityService,
-            ILogger<TransactionsController> logger)
+        public UserInfoController(IUnitOfWork unitOfWork,
+            IIdentityService identityService)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         // GET api/v1/userinfo/find[?username="dem"]
@@ -41,15 +36,11 @@ namespace Transaction.Api.Controllers
                 return Ok(new List<UserInfoViewModel>());
 
             var _userName = userName.ToLower();
-            var userid = _identityService.GetUserIdentity();
+            var userId = _identityService.GetUserIdentity();
 
-            var userList = await _context.Users
-                .Where(c => c.Id != userid && (c.UserName.ToLower().Contains(_userName) || c.FullName.ToLower().Contains(_userName)))
-                .OrderBy(c => c.UserName)
-                .Take(30).Select(c => new UserInfoViewModel(c))
-                .ToListAsync();
+            var userList = await _unitOfWork.UserInfoRepository.Find(userId, _userName, 30);
 
-            return Ok(userList);
+            return Ok(userList.ToUserInfoViewModels());
         }
 
         // GET api/v1/userinfo/userId
@@ -61,7 +52,7 @@ namespace Transaction.Api.Controllers
             if (userId == null || userId.Length < 2)
                 return Ok(new List<UserInfoViewModel>());
 
-            var appUser = await _context.Users.FirstOrDefaultAsync(c => c.Id == userId);
+            var appUser = await _unitOfWork.UserInfoRepository.GetAsync(userId);
             if (appUser == null)
                 return NotFound();
                 

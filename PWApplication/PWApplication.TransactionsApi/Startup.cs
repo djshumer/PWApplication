@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using PWApplication.TransactionApi.Infrastructure.Data;
+using PWApplication.TransactionApi.Infrastructure.Filters;
+using PWApplication.TransactionApi.Infrastructure.Services;
 using Swashbuckle.AspNetCore.Swagger;
-using Transaction.Api.Infrastructure.Data;
-using Transaction.Api.Infrastructure.Filters;
-using Transaction.Api.Infrastructure.Services;
 
-namespace Transaction.Api
+namespace PWApplication.TransactionApi
 {
     public class Startup
     {
@@ -75,10 +69,7 @@ namespace Transaction.Api
                    c.OAuthClientId("transactionsswaggerui");
                    c.OAuthAppName("PW Transactions Swagger UI");
                });
-
         }
-
-      
     }
 
     public static class CustomExtensionMethods
@@ -161,6 +152,7 @@ namespace Transaction.Api
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             
             return services;
         }

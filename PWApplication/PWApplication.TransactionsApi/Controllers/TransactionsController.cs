@@ -1,34 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Transaction.Api.Infrastructure.Data;
-using Transaction.Api.Infrastructure.Data.DataModels;
-using Transaction.Api.Infrastructure.Services;
-using Transaction.Api.Models;
+using PWApplication.TransactionApi.Extensions;
+using PWApplication.TransactionApi.Infrastructure.Data;
+using PWApplication.TransactionApi.Infrastructure.Data.DataModels;
+using PWApplication.TransactionApi.Infrastructure.Exceptions;
+using PWApplication.TransactionApi.Infrastructure.Services;
+using PWApplication.TransactionApi.Models;
 
-namespace Transaction.Api.Controllers
+namespace PWApplication.TransactionApi.Controllers
 {
     [Route("api/v1/transactions")]
     [Authorize]
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly PWTranscationContext _context;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IIdentityService _identityService;
         private readonly ILogger<TransactionsController> _logger;
 
-        public TransactionsController(PWTranscationContext context,
+        public TransactionsController(IUnitOfWork unitOfWork,
             IIdentityService identityService,
             ILogger<TransactionsController> logger)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -37,20 +36,18 @@ namespace Transaction.Api.Controllers
         [Route("last")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<TransactionViewModel>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<IEnumerable<TransactionViewModel>>> GetLastTransactions([FromQuery]int count = 0)
         {
+            if (count < 1)
+                return BadRequest();
             if (count > 1000) count = 1000;
 
-            var userid = _identityService.GetUserIdentity();
+            var userId = _identityService.GetUserIdentity();
 
-            var transactionList = await _context.PWTransactions
-                .Where(c => c.AgentId == userid)
-                .Include(c => c.Сounteragent)
-                .OrderByDescending(c => c.OperationDateTime)
-                .Take(count).Select(c => new TransactionViewModel(c))
-                .ToListAsync();
+            var transactionList = await _unitOfWork.TransactionRepository.GetLastTransactionsWithIncludeAsync(userId, count);
 
-            return Ok(transactionList);
+            return Ok(transactionList.ToTransactionViewModels());
         }
 
         // GET api/v1/transactions/range[?skip=100&count=100]
@@ -61,17 +58,11 @@ namespace Transaction.Api.Controllers
         {
             if (count > 1000) count = 1000;
 
-            var userid = _identityService.GetUserIdentity();
+            var userId = _identityService.GetUserIdentity();
 
-            var transactionList = await _context.PWTransactions
-                .Where(c => c.AgentId == userid)
-                .Include(c => c.Сounteragent)
-                .OrderByDescending(c => c.OperationDateTime)
-                .Skip(skip).Take(count)
-                .Select(c => new TransactionViewModel(c))
-                .ToListAsync();
+            var transactionList = await _unitOfWork.TransactionRepository.GetTransactionsByRangeAsync(userId, skip, count);
 
-            return Ok(transactionList);
+            return Ok(transactionList.ToTransactionViewModels());
         }
 
         // GET api/v1/transactions/bydate[?startDate=10.10.2019&endDate=15.10.2019]
@@ -80,16 +71,11 @@ namespace Transaction.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<TransactionViewModel>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<TransactionViewModel>>> GetTransactionsByDate([FromQuery]DateTime startDate, [FromQuery]DateTime endDate)
         {
-            var userid = _identityService.GetUserIdentity();
+            var userId = _identityService.GetUserIdentity();
 
-            var transactionList = await _context.PWTransactions
-                .Where(c => c.AgentId == userid && c.OperationDateTime >= startDate && c.OperationDateTime <= endDate)
-                .Include(c => c.Сounteragent)
-                .OrderByDescending(c => c.OperationDateTime)
-                .Select(c => new TransactionViewModel(c))
-                .ToListAsync();
-
-            return Ok(transactionList);
+            var transactionList = await _unitOfWork.TransactionRepository.GetTransactionsByDateAsync(userId, startDate, endDate);
+              
+            return Ok(transactionList.ToTransactionViewModels());
         }
 
         // GET api/v1/transactions/balance
@@ -98,12 +84,9 @@ namespace Transaction.Api.Controllers
         [ProducesResponseType(typeof(Decimal), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<decimal>> GetBalance()
         {
-            var userid = _identityService.GetUserIdentity();
+            var userId = _identityService.GetUserIdentity();
 
-            var lastTransaction = await _context.PWTransactions
-                .Where(c => c.AgentId == userid)
-                .OrderByDescending(c => c.OperationDateTime)
-                .FirstOrDefaultAsync();
+            var lastTransaction = await _unitOfWork.TransactionRepository.GetLastTransaction(userId);
 
             if (lastTransaction == null)
             {
@@ -120,10 +103,7 @@ namespace Transaction.Api.Controllers
         {
             var userid = _identityService.GetUserIdentity();
 
-            var transaction = await _context.PWTransactions
-                .Where(c => c.AgentId == userid)
-                .Include(c => c.Сounteragent)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var transaction = await _unitOfWork.TransactionRepository.GetTransactionWithInclude(userid, id);
 
             if (transaction == null)
             {
@@ -150,15 +130,9 @@ namespace Transaction.Api.Controllers
                 return BadRequest();
             }
 
-            var agentOneLastTr = await _context.PWTransactions
-                .Where(c => c.AgentId == agentId)
-                .OrderBy(c => c.OperationDateTime)
-                .FirstOrDefaultAsync();
+            var agentOneLastTr = await _unitOfWork.TransactionRepository.GetLastTransaction(agentId);
 
-            var agentTwoLastTr = await _context.PWTransactions
-                .Where(c => c.AgentId == model.CounteragentId)
-                .OrderBy(c => c.OperationDateTime)
-                .FirstOrDefaultAsync();
+            var agentTwoLastTr = await _unitOfWork.TransactionRepository.GetLastTransaction(model.CounteragentId);
 
             var operationTime = DateTime.UtcNow;
             model.TransactionAmount = Decimal.Round(model.TransactionAmount, 2);
@@ -197,16 +171,16 @@ namespace Transaction.Api.Controllers
                 TransactionTwoId = transactionTwo.Id
             };
 
-            _context.PWTransactions.Add(transactionOne);
-            _context.PWTransactions.Add(transactionTwo);
-            _context.PWOperationPairs.Add(operationPair);
+            _unitOfWork.TransactionRepository.Create(transactionOne);
+            _unitOfWork.TransactionRepository.Create(transactionTwo);
+            _unitOfWork.OperationPairsRepository.Create(operationPair);
 
             try
             {
-                await _context.SaveChangesAsync();
-                _context.Entry(transactionOne).Reference(b => b.Сounteragent).Load();
+                await _unitOfWork.SaveChangesAsync();
+                transactionOne = await _unitOfWork.TransactionRepository.GetTransactionWithInclude(agentId, transactionOne.Id);
             }
-            catch (DbUpdateException exc)
+            catch (DbException exc)
             {
                 _logger.LogWarning($"PostTransaction agentId: {agentId}; counteragentId: {model.CounteragentId}; transactionAmount: {model.TransactionAmount}; Error: {exc.ToString()}.");
                 throw;

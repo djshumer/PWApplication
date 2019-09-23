@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 
-
-namespace Transaction.Api.Infrastructure.Services
+namespace PWApplication.TransactionApi.Infrastructure.Services
 {
     public class IdentityService : IIdentityService
     {

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PWApplication.MobileAppService.Models.DataModels
+namespace PWApplication.Identity.Models.DataModels
 {
     public class PWOperationPair
     {

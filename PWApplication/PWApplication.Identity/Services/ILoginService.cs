@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
-namespace PWApplication.MobileAppService.Services
+namespace PWApplication.Identity.Services
 {
     public interface ILoginService<T>
     {

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Mvc;
-using PWApplication.MobileAppService.Models;
-using PWApplication.MobileAppService.Services;
+using PWApplication.Identity.Models;
+using PWApplication.Identity.Services;
 
-namespace PWApplication.MobileAppService.Controllers
+namespace PWApplication.Identity.Controllers
 {
     public class HomeController : Controller
     {

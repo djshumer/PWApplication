@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using System.IO;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using PWApplication.TransactionApi.Infrastructure.Data;
 using Serilog;
-using System;
-using System.IO;
-using Transaction.Api.Infrastructure.Data;
 
-
-namespace Transaction.Api
+namespace PWApplication.TransactionApi
 {
     public class Program
     {

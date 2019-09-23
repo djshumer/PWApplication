@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 
-
-namespace PWApplication.MobileAppService.Services
+namespace PWApplication.Identity.Services
 {
     public class IdentityService : IIdentityService
     {

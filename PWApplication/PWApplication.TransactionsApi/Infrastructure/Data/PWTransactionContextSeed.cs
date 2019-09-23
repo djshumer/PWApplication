@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
-using System;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
-using Transaction.Api.Infrastructure.Data.DataModels;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+using PWApplication.TransactionApi.Infrastructure.Data.DataModels;
 
-namespace Transaction.Api.Infrastructure.Data
+namespace PWApplication.TransactionApi.Infrastructure.Data
 {
     public class PWTransactionContextSeed
     {

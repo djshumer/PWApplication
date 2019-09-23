@@ -1,8 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-
-namespace PWApplication.MobileAppService.Data.Migrations
+namespace PWApplication.Identity.Data.Migrations
 {
     public partial class Transacton : Migration
     {

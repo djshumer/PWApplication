@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PWApplication.MobileAppService.Models.AccountViewModels
+﻿namespace PWApplication.Identity.Models.AccountViewModels
 {
     public class LoggedOutViewModel
     {

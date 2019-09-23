@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Transaction.Api.Infrastructure.Exceptions
+namespace PWApplication.TransactionApi.Infrastructure.Exceptions
 {
     /// <summary>
     /// Exception type for app exceptions

@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System.Net;
-using Transaction.Api.Infrastructure.ActionResults;
-using Transaction.Api.Infrastructure.Exceptions;
+using PWApplication.TransactionApi.Infrastructure.ActionResults;
+using PWApplication.TransactionApi.Infrastructure.Exceptions;
 
-namespace Transaction.Api.Infrastructure.Filters
+namespace PWApplication.TransactionApi.Infrastructure.Filters
 {
     public class HttpGlobalExceptionFilter : IExceptionFilter
     {

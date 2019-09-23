@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Transaction.Api.Infrastructure.Data.DataModels
+namespace PWApplication.TransactionApi.Infrastructure.Data.DataModels
 {
     public class ApplicationUser : IdentityUser
     {       

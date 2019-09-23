@@ -1,36 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using IdentityServer4;
-using IdentityServer4.AccessTokenValidation;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
-using IdentityServer4.Models;
 using IdentityServer4.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PWApplication.MobileAppService.Certificates;
-using PWApplication.MobileAppService.Configuration;
-using PWApplication.MobileAppService.Data;
-using PWApplication.MobileAppService.Models;
-using PWApplication.MobileAppService.Models.DataModels;
-using PWApplication.MobileAppService.Services;
-using Swashbuckle.AspNetCore.Swagger;
+using PWApplication.Identity.Certificates;
+using PWApplication.Identity.Data;
+using PWApplication.Identity.Models.DataModels;
+using PWApplication.Identity.Services;
 
-namespace PWApplication.MobileAppService
+namespace PWApplication.Identity
 {
     public class Startup
     {

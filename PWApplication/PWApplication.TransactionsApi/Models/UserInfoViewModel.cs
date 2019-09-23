@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Transaction.Api.Infrastructure.Data.DataModels;
+﻿using PWApplication.TransactionApi.Infrastructure.Data.DataModels;
 
-namespace Transaction.Api.Models
+namespace PWApplication.TransactionApi.Models
 {
     public class UserInfoViewModel
     {

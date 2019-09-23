@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Models.AccountViewModels
+namespace PWApplication.Identity.Models.AccountViewModels
 {
     public class RegisterViewModel
     {

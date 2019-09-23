@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PWApplication.MobileAppService.Data.Migrations
+namespace PWApplication.Identity.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20181129175506_Initial")]

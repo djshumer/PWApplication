@@ -3,15 +3,13 @@ using System.IO;
 using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using PWApplication.MobileAppService.Data;
+using PWApplication.Identity.Data;
 using Serilog;
 
-
-namespace PWApplication.MobileAppService
+namespace PWApplication.Identity
 {
     public class Program
     {

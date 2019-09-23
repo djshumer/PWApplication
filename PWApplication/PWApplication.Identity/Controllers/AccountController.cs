@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -12,13 +10,14 @@ using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PWApplication.MobileAppService.Models.AccountViewModels;
-using PWApplication.MobileAppService.Models.DataModels;
-using PWApplication.MobileAppService.Services;
+using PWApplication.Identity.Models.AccountViewModels;
+using PWApplication.Identity.Models.DataModels;
+using PWApplication.Identity.Services;
 
-namespace PWApplication.MobileAppService.Controllers
+namespace PWApplication.Identity.Controllers
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local accounts.

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace Transaction.Api.Infrastructure.ActionResults
+namespace PWApplication.TransactionApi.Infrastructure.ActionResults
 {
     public class InternalServerErrorObjectResult : ObjectResult
     {

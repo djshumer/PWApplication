@@ -2,8 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
-namespace Transaction.Api.Infrastructure.Data.DataModels
+namespace PWApplication.TransactionApi.Infrastructure.Data.DataModels
 {
     public class PWOperationPair
     {

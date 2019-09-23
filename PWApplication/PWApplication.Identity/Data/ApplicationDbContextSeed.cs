@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Data
+namespace PWApplication.Identity.Data
 {
     public class ApplicationDbContextSeed 
     {

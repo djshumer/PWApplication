@@ -158,13 +158,15 @@ namespace PWApplication.MobileShared.Services.RequestProvider
 
         private HttpClient CreateHttpClient(string token = "")
         {
+#if DEBUG
             var httpClient = new HttpClient(GetHttpClientHandler());
-            
+#else
+            var httpClient = new HttpClient();
+#endif       
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             if (!string.IsNullOrEmpty(token))
             {
-                //httpClient.SetBearerToken(token);
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
             
@@ -181,11 +183,8 @@ namespace PWApplication.MobileShared.Services.RequestProvider
             handler.ServerCertificateCustomValidationCallback =
             (HttpRequestMessage message, X509Certificate2 cert, X509Chain chain, SslPolicyErrors errors) =>
             {
-                if (message.RequestUri.Host.Contains("localhost")
-                || message.RequestUri.Host.Contains("10.0.2.2"))
-                    return true;
-                else
-                    return false;
+                return message.RequestUri.Host.Contains("localhost")
+                       || message.RequestUri.Host.Contains("10.0.2.2");
             };
 
             return handler;

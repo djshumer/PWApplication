@@ -4,22 +4,17 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Data
+namespace PWApplication.Identity.Data
 {
     public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
-        }
-
-        public AppDbContext() : base()
-        {
-            //Database.EnsureCreated();
         }
 
         public DbSet<PWTransaction> PWTransactions { get; set; }
@@ -126,5 +121,17 @@ namespace PWApplication.MobileAppService.Data
                 }
             }
         }
+    }
+
+    public class AppDbContextDesignFactory : IDesignTimeDbContextFactory<AppDbContext>
+    {
+        public AppDbContext CreateDbContext(string[] args)
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=PWAppDb;Trusted_Connection=True;");
+
+            return new AppDbContext(optionsBuilder.Options);
+        }
+
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PWApplication.MobileAppService.Data.Migrations.ConfigurationDb
+namespace PWApplication.Identity.Data.Migrations.ConfigurationDb
 {
     public partial class Config : Migration
     {

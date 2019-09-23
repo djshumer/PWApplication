@@ -5,8 +5,8 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>3b5e22fa-1bb5-466c-b85d-f99ced608db8</UserSecretsId>
     <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
-    <AssemblyName>Transaction.Api</AssemblyName>
-    <RootNamespace>Transaction.Api</RootNamespace>
+    <AssemblyName>PWApplication.TransactionApi</AssemblyName>
+    <RootNamespace>PWApplication.TransactionApi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

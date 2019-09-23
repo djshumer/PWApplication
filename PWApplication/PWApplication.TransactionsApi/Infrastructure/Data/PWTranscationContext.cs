@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System.Threading;
-using System.Threading.Tasks;
-using Transaction.Api.Infrastructure.Data.DataModels;
+using PWApplication.TransactionApi.Infrastructure.Data.DataModels;
 
-namespace Transaction.Api.Infrastructure.Data
+namespace PWApplication.TransactionApi.Infrastructure.Data
 {
     public class PWTranscationContext : IdentityDbContext<ApplicationUser>
     {
@@ -13,8 +13,6 @@ namespace Transaction.Api.Infrastructure.Data
 
         public DbSet<PWOperationPair> PWOperationPairs { get; set; }
 
-
-        public PWTranscationContext() : base() { }
 
         public PWTranscationContext(DbContextOptions<PWTranscationContext> options) : base(options) { }
 

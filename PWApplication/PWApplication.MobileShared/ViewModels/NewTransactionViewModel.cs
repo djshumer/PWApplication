@@ -162,13 +162,14 @@ namespace PWApplication.MobileShared.ViewModels
 
                 await NavigationService.NavigationToBackAsync();
             }
-            catch (ServiceAuthenticationException exc) 
+            catch (ServiceAuthenticationException ex) 
             {
+                Debug.WriteLine($"[RetrieveData] Error Retrieve Data: {ex}");
                 await LogoutAsync();
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
-                Debug.WriteLine("Error retrieve data: " + exc.Message);
+                Debug.WriteLine($"[RetrieveData] Error Retrieve Data: {ex}");
                 DialogService.ShowInformationUserMessage(this, "Unable to connect service, check for Internet availability", "Cancel");
             }
             finally

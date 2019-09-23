@@ -1,11 +1,10 @@
-﻿using Swashbuckle.AspNetCore.SwaggerGen;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Transaction.Api.Infrastructure.Filters
+namespace PWApplication.TransactionApi.Infrastructure.Filters
 {
     public class AuthorizeCheckOperationFilter : IOperationFilter
     {

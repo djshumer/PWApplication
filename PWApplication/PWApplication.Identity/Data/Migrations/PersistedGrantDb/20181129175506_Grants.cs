@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PWApplication.MobileAppService.Data.Migrations.PersistedGrantDb
+namespace PWApplication.Identity.Data.Migrations.PersistedGrantDb
 {
     public partial class Grants : Migration
     {

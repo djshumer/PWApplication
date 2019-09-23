@@ -1,10 +1,8 @@
-﻿using IdentityServer4.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using IdentityServer4.Models;
 
-namespace PWApplication.MobileAppService.Models.AccountViewModels
+namespace PWApplication.Identity.Models.AccountViewModels
 {
     public class ConsentViewModel : ConsentInputModel
     {

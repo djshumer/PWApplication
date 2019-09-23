@@ -7,7 +7,7 @@
              x:Class="PWApplication.MobileShared.Views.Templates.TransactionTemplate" >
   <ViewCell.View>
       <Grid BackgroundColor="{StaticResource BackgroundColor}"
-              Margin="5" RowSpacing="0">
+              Margin="5" RowSpacing="0" HorizontalOptions="Fill">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -27,9 +27,9 @@
                    HorizontalOptions="StartAndExpand" />
             <Label Grid.Row="0" Grid.Column="1" Margin="3,0,3,3" Grid.RowSpan="2"
                    VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="End" 
-                   d:Text="50.00" FontSize="{StaticResource Key=ExtraBigSize2}" 
-                   Text="{Binding TransactionAmountView }" 
+                   HorizontalOptions="Fill" 
+                   d:Text="-50.00" FontSize="{StaticResource Key=ExtraBigSize2}" 
+                   Text="{Binding TransactionAmountView}" 
                    TextColor="{StaticResource OrangeTextColor}" >
                 <Label.Triggers>
                     <DataTrigger TargetType="Label" Binding="{Binding IsIncoming}" Value="True">
@@ -37,7 +37,7 @@
                     </DataTrigger>
                 </Label.Triggers>
             </Label>
-            <Label Grid.Row="3" Grid.Column="0" Margin="3,0,3,3"
+            <Label Grid.Row="2" Grid.Column="0" Margin="3,0,3,3"
                    d:Text="Bonus" FontSize="{StaticResource Key=LittleSize}"
                    Text="{Binding Description}" 
                    MaxLines="1" 

@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PWApplication.MobileAppService": {
+    "PWApplication.Identity": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

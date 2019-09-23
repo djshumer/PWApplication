@@ -1,6 +1,6 @@
 ﻿
 
-namespace PWApplication.MobileAppService.Services
+namespace PWApplication.Identity.Services
 {
     public interface IIdentityService
     {

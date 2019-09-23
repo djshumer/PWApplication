@@ -1,6 +1,6 @@
 ﻿
 
-namespace Transaction.Api.Infrastructure.Services
+namespace PWApplication.TransactionApi.Infrastructure.Services
 {
     public interface IIdentityService
     {

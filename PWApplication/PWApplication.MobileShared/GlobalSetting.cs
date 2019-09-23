@@ -15,7 +15,7 @@ namespace PWApplication.MobileShared
             DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5000" : "http://localhost:5000";
 
         public static string PWTransacionsEndpoint =
-            DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:44392" : "http://localhost:44392";
+            DeviceInfo.Platform == DevicePlatform.Android ? "https://10.0.2.2:44392" : "https://localhost:44392";
         
         private string _baseIdentityEndpoint;
         private string _basePWEndpoint;
@@ -85,7 +85,6 @@ namespace PWApplication.MobileShared
             UserInfoEndpoint = $"{connectBaseEndpoint}/userinfo";
             TokenEndpoint = $"{connectBaseEndpoint}/token";
             LogoutEndpoint = $"{connectBaseEndpoint}/endsession";
-
             var baseUri = ExtractBaseUri(endpoint);
             Callback = $"{baseUri}/xamarincallback";
         }

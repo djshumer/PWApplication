@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
-namespace PWApplication.MobileAppService.Certificates
+namespace PWApplication.Identity.Certificates
 {
     public static class Certificate
     {

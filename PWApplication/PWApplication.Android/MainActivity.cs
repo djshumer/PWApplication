@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 
+
 namespace PWApplication.Droid
 {
     [Activity(Label = "PWApplication", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
@@ -20,7 +21,7 @@ namespace PWApplication.Droid
             base.OnCreate(savedInstanceState);
 
             // HERE
-#if DEBUG
+#if DEBUG 
             System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
 #endif
 

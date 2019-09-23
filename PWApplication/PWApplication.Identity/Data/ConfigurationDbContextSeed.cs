@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.DbContexts;
@@ -7,9 +6,9 @@ using IdentityServer4.EntityFramework.Entities;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using PWApplication.MobileAppService.Configuration;
+using PWApplication.Identity.Configuration;
 
-namespace PWApplication.MobileAppService.Data
+namespace PWApplication.Identity.Data
 {
     public class ConfigurationDbContextSeed     {
 

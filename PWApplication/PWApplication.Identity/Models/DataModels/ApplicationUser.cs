@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Identity;
 
-namespace PWApplication.MobileAppService.Models.DataModels
+namespace PWApplication.Identity.Models.DataModels
 {
     public class ApplicationUser : IdentityUser
     {

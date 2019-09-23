@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "PWTransaction.Api": {
+    "PWApplication.TransactionApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

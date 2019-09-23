@@ -1,10 +1,6 @@
-﻿using PWApplication.MobileAppService.Models.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Models
+namespace PWApplication.Identity.Models
 {
     public class UserInfoViewModel
     {

@@ -81,9 +81,9 @@ namespace PWApplication.MobileShared.ViewModels
             get
             {
                 if (Transaction.TransactionAmount > 0)
-                    return String.Format("+{0:N2}", Transaction.TransactionAmount);
+                    return $"+{Transaction.TransactionAmount:N2}";
                 else
-                    return String.Format("{0:N2}", Transaction.TransactionAmount);
+                    return $"{Transaction.TransactionAmount:N2}";
             }
         }
 

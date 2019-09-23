@@ -8,10 +8,9 @@ using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-
-namespace PWApplication.MobileAppService.Services
+namespace PWApplication.Identity.Services
 {
     public class ProfileService : IProfileService
     {

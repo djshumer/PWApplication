@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Services
+namespace PWApplication.Identity.Services
 {
     public class EFLoginService : ILoginService<ApplicationUser>
     {

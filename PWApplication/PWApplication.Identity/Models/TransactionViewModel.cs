@@ -1,7 +1,7 @@
 ﻿using System;
-using PWApplication.MobileAppService.Models.DataModels;
+using PWApplication.Identity.Models.DataModels;
 
-namespace PWApplication.MobileAppService.Models
+namespace PWApplication.Identity.Models
 {
     public class TransactionViewModel
     {

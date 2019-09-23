@@ -55,7 +55,7 @@ namespace PWApplication.Droid.Renderers
                 _callback?.Invoke(Convert.ToString(value));
             }
         }
-        private async void HandleElementNavigating(object sender, WebNavigatingEventArgs e)
+        private void HandleElementNavigating(object sender, WebNavigatingEventArgs e)
         {
             try
             {
@@ -63,9 +63,8 @@ namespace PWApplication.Droid.Renderers
                 _lastSource = e.Source;
                 _lastUrl = e.Url;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
             }
         }
 

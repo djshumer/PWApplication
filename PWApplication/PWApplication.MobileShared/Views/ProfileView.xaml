@@ -35,7 +35,7 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <StackLayout Grid.Row="0">
-                    <Label Grid.Column="0" d:Text="John Wick" Style="{StaticResource LabelUserNameStyle}"
+                    <Label d:Text="John Wick" Style="{StaticResource LabelUserNameStyle}"
                             Text="{Binding UserInfo.FullName, Mode=OneWay}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
