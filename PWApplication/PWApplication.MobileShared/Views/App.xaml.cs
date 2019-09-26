@@ -32,7 +32,7 @@ namespace PWApplication.MobileShared.Views
         {
             _settingsService = ViewModelLocator.Resolve<ISettingsService>();
             //TODO:UseMock false for backend test and use Android Emulator with api level 23-26 
-            _settingsService.UseMocks = false;
+            _settingsService.UseMocks = true;
             if (_settingsService.UseMocks)
                 ViewModelLocator.UpdateDependencies(_settingsService.UseMocks);
         }
